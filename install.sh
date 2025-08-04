@@ -110,7 +110,7 @@ if [[ ! -f genieacs.env.template ]]; then
 fi
 
 cp genieacs.env.template /opt/genieacs/genieacs.env
-echo "GENIEACS_UI_JWT_SECRET=$(node -e \"console.log(require('crypto').randomBytes(128).toString('hex'))\")" >> /opt/genieacs/genieacs.env
+echo "GENIEACS_UI_JWT_SECRET=$(node -e 'console.log(require("crypto").randomBytes(128).toString("hex"))')" >> /opt/genieacs/genieacs.env
 chown genieacs:genieacs /opt/genieacs/genieacs.env
 chmod 600 /opt/genieacs/genieacs.env
 
