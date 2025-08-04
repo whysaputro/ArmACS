@@ -18,13 +18,13 @@ Installer otomatis untuk GenieACS 1.2.13 pada Armbian v24.04 Ubuntu (Noble).
 ## 🛠️ Cara Install
 
 ```bash
-git clone https://github.com/username/genieacs-ubuntu-installer.git
-cd genieacs-armbian-installer
+git clone https://github.com/whysaputro/ArmACS.git
+cd ArmACS
 chmod +x install.sh uninstall.sh
 sudo ./install.sh
 ```
 
-Setelah selesai, buka browser ke http://<ip-server>:3000
+Setelah selesai, buka browser ke http://localhost:3000
 
 ## 🔁 Cara Uninstall
 
