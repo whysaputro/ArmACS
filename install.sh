@@ -102,7 +102,7 @@ run_command "useradd --system --no-create-home --user-group genieacs" "Adding ge
 run_command "mkdir -p /opt/genieacs/ext" "Creating /opt/genieacs/ext"
 run_command "chown -R genieacs:genieacs /opt/genieacs" "Setting permissions"
 run_command "mkdir -p /var/log/genieacs" "Creating log folder"
-run_command "chown genieacs:genieacs /var/log/genieacs"
+run_command "chown genieacs:genieacs /var/log/genieacs" "Setting log folder permissions"
 
 # ENV file
 if [[ ! -f genieacs.env.template ]]; then
@@ -110,10 +110,10 @@ if [[ ! -f genieacs.env.template ]]; then
     exit 1
 fi
 
-cp genieacs.env.template /opt/genieacs/genieacs.env
-echo "GENIEACS_UI_JWT_SECRET=$(node -e 'console.log(require("crypto").randomBytes(128).toString("hex"))')" >> /opt/genieacs/genieacs.env
-chown genieacs:genieacs /opt/genieacs/genieacs.env
-chmod 600 /opt/genieacs/genieacs.env
+run_command "cp genieacs.env.template /opt/genieacs/genieacs.env" "Copying GenieACS environment template"
+run_command "echo \"GENIEACS_UI_JWT_SECRET=\$(node -e 'console.log(require(\\\"crypto\\\").randomBytes(128).toString(\\\"hex\\\"))')\" >> /opt/genieacs/genieacs.env" "Generating JWT secret for UI"
+run_command "chown genieacs:genieacs /opt/genieacs/genieacs.env" "Setting ownership on genieacs.env"
+run_command "chmod 600 /opt/genieacs/genieacs.env" "Setting permissions on genieacs.env"
 
 # Systemd services
 for svc in cwmp nbi fs ui; do
@@ -122,7 +122,7 @@ for svc in cwmp nbi fs ui; do
         echo -e "${RED}Missing $svc_file${NC}"
         exit 1
     fi
-    cp "$svc_file" /etc/systemd/system/
+    run_command "cp \"$svc_file\" /etc/systemd/system/" "Copying genieacs-$svc.service to systemd"
 done
 
 # Logrotate config
@@ -130,7 +130,7 @@ if [[ ! -f logrotate/genieacs ]]; then
     echo -e "${RED}Missing logrotate/genieacs config${NC}"
     exit 1
 fi
-cp logrotate/genieacs /etc/logrotate.d/genieacs
+run_command "cp logrotate/genieacs /etc/logrotate.d/genieacs" "Copying logrotate config"
 
 # Enable & start services
 run_command "systemctl enable mongod && systemctl start mongod" "Starting MongoDB"
