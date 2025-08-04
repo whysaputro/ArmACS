@@ -102,6 +102,7 @@ run_command "useradd --system --no-create-home --user-group genieacs" "Adding ge
 run_command "mkdir -p /opt/genieacs/ext" "Creating /opt/genieacs/ext"
 run_command "chown -R genieacs:genieacs /opt/genieacs" "Setting permissions"
 run_command "mkdir -p /var/log/genieacs" "Creating log folder"
+run_command "chown genieacs:genieacs /var/log/genieacs"
 
 # ENV file
 if [[ ! -f genieacs.env.template ]]; then
