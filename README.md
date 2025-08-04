@@ -24,7 +24,7 @@ chmod +x install.sh uninstall.sh
 sudo ./install.sh
 ```
 
-Setelah selesai, buka browser ke http://localhost:3000
+Setelah selesai, buka browser ke http://ip-genieacs:3000
 
 ## 🔁 Cara Uninstall
 
